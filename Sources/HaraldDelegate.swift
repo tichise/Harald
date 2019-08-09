@@ -15,4 +15,12 @@ public protocol HaraldDelegate {
     func bleDidConnectToPeripheral(_ peripheral: CBPeripheral)
     func bleDidDisconenctFromPeripheral(_ peripheral: CBPeripheral)
     func bleDidReceiveData(_ peripheral: CBPeripheral, data: Data?)
+    
+    func bleDiscoverTxCharacteristic(txCharacteristic: CBCharacteristic?, peripheral: CBPeripheral)
+    func bleDiscoverRxNotificationCharacteristic(rxNotificationCharacteristic:
+        CBCharacteristic?, peripheral: CBPeripheral)
+    func bleDiscoverBaudrateCharacteristic(baudrateCharacteristic:
+        CBCharacteristic?, peripheral: CBPeripheral)
+    func bleDiscoverConfigCharacteristic(configCharacteristic:
+        CBCharacteristic?, peripheral: CBPeripheral)
 }

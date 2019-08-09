@@ -230,23 +230,29 @@ open class Harald: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
 
             if characteristic.uuid.isEqual(txUUID) {
                 if isDebug {print("UART_TX_UUID を発見 read / writeWithoutResponse")}
-                txCharacteristic = characteristic
-
+                self.haraldDelegate?.bleDiscoverTxCharacteristic(txCharacteristic:
+                    characteristic, peripheral: peripheral)
+                
             } else if characteristic.uuid.isEqual(rxNotificationUUID) {
                 if isDebug {print("UART_RX_NOTIFICATION_UUID を発見 read / notify")}
-                rxNotificationCharacteristic = characteristic
-
+                self.haraldDelegate?.bleDiscoverRxNotificationCharacteristic(rxNotificationCharacteristic:
+                    characteristic, peripheral: peripheral)
+                
                 // 更新通知受け取りを開始する
                 // peripheral.setNotifyValueはエラーが出る、動かない。readで受け取る
-                if let rxNotificationCharacteristic = rxNotificationCharacteristic {
-                    peripheral.setNotifyValue(true, for: rxNotificationCharacteristic)
-                }
+                peripheral.setNotifyValue(true, for: characteristic)
+                
             } else if characteristic.uuid.isEqual(baundrateUUID) {
                 if isDebug {print("Discover UART_BAUDRATE_UUID / writeWithoutResponse")}
-                baudrateCharacteristic = characteristic
+                
+                self.haraldDelegate?.bleDiscoverBaudrateCharacteristic(baudrateCharacteristic:
+                    characteristic, peripheral: peripheral)
+                
             } else if characteristic.uuid.isEqual(configUUID) {
                 if isDebug {print("Discover UART_CONFIG_UUID / writeWithoutResponse")}
-                configCharacteristic = characteristic
+                
+                self.haraldDelegate?.bleDiscoverConfigCharacteristic(configCharacteristic:
+                    characteristic, peripheral: peripheral)
             }
         }
     }
