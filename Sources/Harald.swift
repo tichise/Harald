@@ -13,12 +13,6 @@ open class Harald: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     public var haraldDelegate: HaraldDelegate?
 
     internal var centralManager: CBCentralManager!
-
-    public var configCharacteristic: CBCharacteristic?
-    public var baudrateCharacteristic: CBCharacteristic?
-    public var txCharacteristic: CBCharacteristic?
-    public var rxNotificationCharacteristic: CBCharacteristic?
-
     internal var connectCompletionHandler: (() -> Void)?
     internal var rssiCompletionHandler: ((NSNumber?, Error?) -> Void)?
 

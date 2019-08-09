@@ -16,20 +16,20 @@ extension Harald {
         case ESP32
     }
     
-    public func writeUartTXCharacter(_ peripheral: CBPeripheral, character: String) {
+    public func writeUartTXCharacter(txCharacteristic: CBCharacteristic?, _ peripheral: CBPeripheral, character: String) {
         if bleModuleType == BLEModuleType.Konashi {
-            writeUartTXCharacterForKonashi(peripheral: peripheral, character: character)
+            writeUartTXCharacterForKonashi(txCharacteristic: txCharacteristic, peripheral: peripheral, character: character)
         } else if bleModuleType == BLEModuleType.ESP32 {
-            writeUartTXCharacterForESP32(peripheral: peripheral, sendString: character)
+            writeUartTXCharacterForESP32(txCharacteristic: txCharacteristic, peripheral: peripheral, sendString: character)
         }
     }
     
     /**
      * for konashi
      */
-    public func writeUartTXCharacterForKonashi(peripheral: CBPeripheral, character: String) {
+    public func writeUartTXCharacterForKonashi(txCharacteristic:CBCharacteristic?,  peripheral: CBPeripheral, character: String) {
         
-        guard let txCharacteristic = self.txCharacteristic else {
+        guard let txCharacteristic = txCharacteristic else {
             return
         }
         
@@ -52,9 +52,9 @@ extension Harald {
     /**
      * for ESP32
      */
-    public func writeUartTXCharacterForESP32(peripheral: CBPeripheral, sendString: String) {
+    public func writeUartTXCharacterForESP32(txCharacteristic:CBCharacteristic?, peripheral: CBPeripheral, sendString: String) {
         
-        guard let txCharacteristic = self.txCharacteristic else {
+        guard let txCharacteristic = txCharacteristic else {
             return
         }
         
@@ -67,8 +67,8 @@ extension Harald {
         peripheral.writeValue(sendData, for: txCharacteristic, type: CBCharacteristicWriteType.withResponse)
     }
     
-    public func writeBaundrate(peripheral: CBPeripheral, baudrateRate: CUnsignedChar) {
-        guard let baudrateCharacteristic = self.baudrateCharacteristic else {
+    public func writeBaundrate(baudrateCharacteristic: CBCharacteristic?,  peripheral: CBPeripheral, baudrateRate: CUnsignedChar) {
+        guard let baudrateCharacteristic = baudrateCharacteristic else {
             return
         }
         
@@ -78,8 +78,8 @@ extension Harald {
         peripheral.writeValue(data as Data, for: baudrateCharacteristic, type: CBCharacteristicWriteType.withoutResponse)
     }
     
-    public func writeConfigUuid(peripheral: CBPeripheral) {
-        guard let configCharacteristic = self.configCharacteristic else {
+    public func writeConfigUuid(configCharacteristic: CBCharacteristic?, peripheral: CBPeripheral) {
+        guard let configCharacteristic = configCharacteristic else {
             return
         }
         
@@ -89,25 +89,25 @@ extension Harald {
         peripheral.writeValue(data as Data, for: configCharacteristic, type: CBCharacteristicWriteType.withoutResponse)
     }
     
-    public func isCompleteCharacteristic() -> Bool {
+    public func isCompleteCharacteristic(configCharacteristic: CBCharacteristic?, baudrateCharacteristic: CBCharacteristic?, txCharacteristic: CBCharacteristic?, rxNotificationCharacteristic: CBCharacteristic?) -> Bool {
         
         if configUUID != nil {
-            guard self.configCharacteristic != nil else {
+            guard configCharacteristic != nil else {
                 return false
             }
         }
         
         if baundrateUUID != nil {
-            guard self.baudrateCharacteristic != nil else {
+            guard baudrateCharacteristic != nil else {
                 return false
             }
         }
-
-        guard self.txCharacteristic != nil else {
+        
+        guard txCharacteristic != nil else {
             return false
         }
         
-        guard self.rxNotificationCharacteristic != nil else {
+        guard rxNotificationCharacteristic != nil else {
             return false
         }
         
