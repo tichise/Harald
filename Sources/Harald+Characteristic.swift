@@ -16,7 +16,7 @@ extension Harald {
         case ESP32
     }
     
-    public func writeUartTXCharacter(txCharacteristic: CBCharacteristic?, _ peripheral: CBPeripheral, character: String) {
+    public func writeUartTXCharacter(txCharacteristic: CBCharacteristic?, peripheral: CBPeripheral, character: String) {
         if bleModuleType == BLEModuleType.Konashi {
             writeUartTXCharacterForKonashi(txCharacteristic: txCharacteristic, peripheral: peripheral, character: character)
         } else if bleModuleType == BLEModuleType.ESP32 {
