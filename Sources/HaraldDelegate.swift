@@ -23,4 +23,5 @@ public protocol HaraldDelegate {
         CBCharacteristic?, peripheral: CBPeripheral)
     func bleDiscoverConfigCharacteristic(configCharacteristic:
         CBCharacteristic?, peripheral: CBPeripheral)
+    func receiveLog(message: String)
 }
