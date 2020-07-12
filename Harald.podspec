@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'Harald'
-  s.version = '1.0.1'
+  s.version = '1.0.2'
   s.license = 'MIT'
   s.summary = 'Harald is a BLE library.'
   s.homepage = 'https://github.com/tichise/Harald'

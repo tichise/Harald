@@ -16,7 +16,7 @@ extension Harald {
      */
     public func connect(peripheral: CBPeripheral, connectCompletionHandler: (() -> Void)?) {
         if self.centralManager.state != .poweredOn {
-            if isDebug {print("Couldn´t connect to peripheral")}
+            if isDebug {haraldDelegate?.receiveLog(message: "Couldn´t connect to peripheral")}
             return
         }
         
@@ -30,7 +30,7 @@ extension Harald {
      */
     public func disconnect(peripheral: CBPeripheral) {
         if self.centralManager.state != .poweredOn {
-            if isDebug {print("Couldn´t disconnect from peripheral")}
+            if isDebug {haraldDelegate?.receiveLog(message: "Couldn´t disconnect from peripheral")}
             return
         }
         

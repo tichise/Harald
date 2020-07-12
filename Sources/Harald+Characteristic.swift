@@ -44,7 +44,7 @@ extension Harald {
         d.append(&length, length: 1)
         d.append(data)
         
-        if isDebug {print("write uart tx character: \(character)")}
+        if isDebug {haraldDelegate?.receiveLog(message: "write uart tx character: \(character)")}
         
         peripheral.writeValue(d as Data, for: txCharacteristic, type: CBCharacteristicWriteType.withoutResponse)
     }
@@ -62,7 +62,7 @@ extension Harald {
             return
         }
         
-        if isDebug {print("write uart tx character:  \(sendString)")}
+        if isDebug {haraldDelegate?.receiveLog(message: "write uart tx character:  \(sendString)")}
         
         peripheral.writeValue(sendData, for: txCharacteristic, type: CBCharacteristicWriteType.withResponse)
     }

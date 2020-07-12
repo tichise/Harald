@@ -16,7 +16,7 @@ extension Harald {
     
     public func startScanning(_ serviceUuid: String?, timeout: Double) {
         if self.centralManager.state != .poweredOn {
-            if isDebug {print("Couldn´t start scanning")}
+            if isDebug {haraldDelegate?.receiveLog(message:"Couldn´t start scanning")}
         }
         
         // 指定した秒数でタイムアウトする
