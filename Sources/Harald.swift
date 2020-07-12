@@ -9,7 +9,7 @@ import Foundation
 import CoreBluetooth
 
 open class Harald: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
-    
+        
     public var haraldDelegate: HaraldDelegate?
     
     internal var centralManager: CBCentralManager!
@@ -95,7 +95,7 @@ open class Harald: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     // 復元時に呼ばれるデリゲートメソッド
     // システムがアプリケーションを立ち上げ直してバックグラウンド状態にする際、 CBCentralManagerDelegate の centralManager:willRestoreState:メソッドが呼ばれるの で、これを実装しておきます。
     public func centralManager(_ central: CBCentralManager, willRestoreState dict: [String: Any]) {
-        if isDebug {print("centralManager:willRestoreState:")}
+        if isDebug {haraldDelegate?.receiveLog(message: "centralManager:willRestoreState:")}
     }
     
     // セントラルマネージャの状態変化があると呼ばれる
@@ -111,7 +111,7 @@ open class Harald: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         if isDebug {
             if let deviceName = advertisementData["kCBAdvDataLocalName"] {
                 // キャッシュじゃないところからデバイス名を取り出し
-                print("Discovered BLE device. uuid:\(peripheral.identifier.uuidString) name:\(String(describing: peripheral.name)) kCBAdvDataLocalName:\(deviceName)")
+                 haraldDelegate?.receiveLog(message: "Discovered BLE device. uuid:\(peripheral.identifier.uuidString) name:\(String(describing: peripheral.name)) kCBAdvDataLocalName:\(deviceName)")
             }
         }
         
@@ -129,7 +129,7 @@ open class Harald: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     // ペリフェラルに接続したら呼ばれる
     public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         
-        if isDebug {print("ペリフェラルとの接続に成功 \(peripheral.identifier.uuidString)")}
+        if isDebug {haraldDelegate?.receiveLog(message: "ペリフェラルとの接続に成功 \(peripheral.identifier.uuidString)")}
         
         if let handler = connectCompletionHandler {
             handler()
@@ -144,7 +144,7 @@ open class Harald: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     // centralが周辺機器との接続を作成できないときに呼び出されます。
     public func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         if isDebug {
-            print("Failed to connect... \(peripheral.identifier.uuidString) error: \(error!.localizedDescription)")
+            haraldDelegate?.receiveLog(message: "Failed to connect... \(peripheral.identifier.uuidString) error: \(error!.localizedDescription)")
         }
     }
     
@@ -152,12 +152,12 @@ open class Harald: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     public func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         
         if isDebug {
-            print("Disconnected from peripheral...: \(peripheral.identifier.uuidString)")
+            haraldDelegate?.receiveLog(message: "Disconnected from peripheral...: \(peripheral.identifier.uuidString)")
         }
         
         if error != nil {
             if isDebug {
-                print("[Error] \(error!.localizedDescription)")
+                haraldDelegate?.receiveLog(message: "[Error] \(error!.localizedDescription)")
             }
         }
         
@@ -172,25 +172,25 @@ open class Harald: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     public func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         
         if isDebug {
-            print("didDiscoverServices")
+            haraldDelegate?.receiveLog(message: "didDiscoverServices")
         }
         
         if error != nil {
-            if isDebug {print("Error: \(String(describing: error))")}
+            if isDebug {haraldDelegate?.receiveLog(message: "Error: \(String(describing: error))")}
             return
         }
         
         let services = peripheral.services!
         
         if (services.count) <= 0 {
-            if isDebug {print("Service not found")}
+            if isDebug {haraldDelegate?.receiveLog(message: "Service not found")}
             return
         }
         
         if isDebug {
-            print("[DEBUG] Found services for peripheral: \(peripheral.identifier.uuidString)")
-            print("Discover \(services.count) service\n\(services)\n")
-            print("services: \(services)")
+            haraldDelegate?.receiveLog(message: "[DEBUG] Found services for peripheral: \(peripheral.identifier.uuidString)")
+            haraldDelegate?.receiveLog(message: "Discover \(services.count) service\n\(services)\n")
+            haraldDelegate?.receiveLog(message: "services: \(services)")
         }
         
         for service in services {
@@ -204,33 +204,33 @@ open class Harald: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     public func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         
         if error != nil {
-            if isDebug {print("\(String(describing: error))")}
+            if isDebug {haraldDelegate?.receiveLog(message: "\(String(describing: error))")}
             return
         }
         
         if (service.characteristics?.count)! <= 0 {
             if isDebug {
-                print("No characteristic found")
+                haraldDelegate?.receiveLog(message: "No characteristic found")
             }
             return
         }
         
         let characteristics = service.characteristics!
         
-        if isDebug {print("\(characteristics.count)個のキャラクタリスティックを発見しました。\n")}
+        if isDebug {haraldDelegate?.receiveLog(message: "\(characteristics.count)個のキャラクタリスティックを発見しました。\n")}
         
         for characteristic in characteristics {
-            if isDebug {print("Characteristic is \(characteristic.uuid.uuidString)\n\n")}
+            if isDebug {haraldDelegate?.receiveLog(message: "Characteristic is \(characteristic.uuid.uuidString)\n\n")}
             
             if characteristic.uuid.isEqual(txUUID) {
-                if isDebug {print("UART_TX_UUID を発見 / writeWithoutResponse")}
+                if isDebug {haraldDelegate?.receiveLog(message: "UART_TX_UUID を発見 / writeWithoutResponse")}
                 if isDebug {checkCharacteristic(characteristic: characteristic)}
                 
                 self.haraldDelegate?.bleDiscoverTxCharacteristic(txCharacteristic:
                     characteristic, peripheral: peripheral)
                 
             } else if characteristic.uuid.isEqual(rxNotificationUUID) {
-                if isDebug {print("UART_RX_NOTIFICATION_UUID を発見 / notify")}
+                if isDebug {haraldDelegate?.receiveLog(message: "UART_RX_NOTIFICATION_UUID を発見 / notify")}
                 if isDebug {checkCharacteristic(characteristic: characteristic)}
                 self.haraldDelegate?.bleDiscoverRxNotificationCharacteristic(rxNotificationCharacteristic:
                     characteristic, peripheral: peripheral)
@@ -240,14 +240,14 @@ open class Harald: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
                 peripheral.setNotifyValue(true, for: characteristic)
                 
             } else if characteristic.uuid.isEqual(baundrateUUID) {
-                if isDebug {print("Discover UART_BAUDRATE_UUID / writeWithoutResponse")}
+                if isDebug {haraldDelegate?.receiveLog(message: "Discover UART_BAUDRATE_UUID / writeWithoutResponse")}
                 if isDebug {checkCharacteristic(characteristic: characteristic)}
                 
                 self.haraldDelegate?.bleDiscoverBaudrateCharacteristic(baudrateCharacteristic:
                     characteristic, peripheral: peripheral)
                 
             } else if characteristic.uuid.isEqual(configUUID) {
-                if isDebug {print("Discover UART_CONFIG_UUID / writeWithoutResponse")}
+                if isDebug {haraldDelegate?.receiveLog(message: "Discover UART_CONFIG_UUID / writeWithoutResponse")}
                 if isDebug {checkCharacteristic(characteristic: characteristic)}
                 
                 self.haraldDelegate?.bleDiscoverConfigCharacteristic(configCharacteristic:
@@ -264,11 +264,11 @@ open class Harald: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     public func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
         
         if error != nil {
-            if isDebug {print("Notification state update failure / \(String(describing: error?.localizedDescription))")}
+            if isDebug {haraldDelegate?.receiveLog(message: "Notification state update failure / \(String(describing: error?.localizedDescription))")}
             return
         }
         
-        if isDebug {print("Notification state update success / \(characteristic.isNotifying) uuid: \(characteristic.uuid), value: \(String(describing: characteristic.value))")}
+        if isDebug {haraldDelegate?.receiveLog(message: "Notification state update success / \(characteristic.isNotifying) uuid: \(characteristic.uuid), value: \(String(describing: characteristic.value))")}
     }
     
     /**
@@ -278,12 +278,12 @@ open class Harald: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     public func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         
         if let error = error {
-            if isDebug {print("Receive write result / \(error)")}
+            if isDebug {haraldDelegate?.receiveLog(message: "Receive write result / \(error)")}
             return
         }
         
         if isDebug {
-            print("Receive write result / characteristic UUID: \(characteristic.uuid), value: \(String(describing: characteristic.value))")
+            haraldDelegate?.receiveLog(message: "Receive write result / characteristic UUID: \(characteristic.uuid), value: \(String(describing: characteristic.value))")
         }
     }
     
@@ -295,7 +295,7 @@ open class Harald: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     public func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         
         if let error = error {
-            if isDebug {print("Data update notification error / \(error)")}
+            if isDebug {haraldDelegate?.receiveLog(message: "Data update notification error / \(error)")}
             return
         }
         
@@ -311,19 +311,19 @@ open class Harald: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
      */
     private func checkCharacteristic(characteristic: CBCharacteristic) {
         if (characteristic.properties.rawValue & CBCharacteristicProperties.read.rawValue) != 0 {
-            print("property is CBCharacteristicProperties.read")
+            haraldDelegate?.receiveLog(message: "property is CBCharacteristicProperties.read")
         }
         
         if (characteristic.properties.rawValue & CBCharacteristicProperties.notify.rawValue) != 0 {
-            print("property is CBCharacteristicProperties.notify")
+            haraldDelegate?.receiveLog(message: "property is CBCharacteristicProperties.notify")
         }
         
         if (characteristic.properties.rawValue & CBCharacteristicProperties.write.rawValue) != 0 {
-            print("property is CBCharacteristicProperties.write")
+            haraldDelegate?.receiveLog(message: "property is CBCharacteristicProperties.write")
         }
         
         if (characteristic.properties.rawValue & CBCharacteristicProperties.writeWithoutResponse.rawValue) != 0 {
-            print("property is CBCharacteristicProperties.writeWithoutResponse")
+            haraldDelegate?.receiveLog(message: "property is CBCharacteristicProperties.writeWithoutResponse")
         }
     }
 }

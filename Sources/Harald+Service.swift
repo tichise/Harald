@@ -12,7 +12,7 @@ import CoreBluetooth
 extension Harald {
     
     public func discoverServices(peripheral: CBPeripheral) {
-        if isDebug {print("Start service search")}
+        if isDebug {haraldDelegate?.receiveLog(message:"Start service search")}
         
         guard let serviceUUID = self.serviceUUID else {
             fatalError("ServiceUUID is not set")
