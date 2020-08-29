@@ -172,7 +172,7 @@ func bleDidReceiveData(_ peripheral: CBPeripheral, data: Data?) {
         let sendTextArray: [String] = receiveMessage.components(separatedBy: ";")
                     
         for sendText in sendTextArray {
-            executeRxAction(peripheral: peripheral, text: sendText+";")
+            // 受け取ったTextを元に処理する
         }
             
         receiveMessage = ""
