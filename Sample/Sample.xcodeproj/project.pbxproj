@@ -15,6 +15,7 @@
 		798269081F1F269B0090613B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 798269061F1F269B0090613B /* LaunchScreen.storyboard */; };
 		798269131F1F269B0090613B /* SampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798269121F1F269B0090613B /* SampleTests.swift */; };
 		B01D7FCD21B2A4AC0072F5FC /* HaraldConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01D7FCC21B2A4AC0072F5FC /* HaraldConstants.swift */; };
+		B022427124F9E467005209A4 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = B022427024F9E467005209A4 /* README.md */; };
 		ED4CF6F6AB109C360DFA7905 /* Pods_Sample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E94290F2CC4BD5A4419DFEA1 /* Pods_Sample.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,7 +53,7 @@
 		798269141F1F269B0090613B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		798269191F1F269B0090613B /* SampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B01D7FCC21B2A4AC0072F5FC /* HaraldConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HaraldConstants.swift; sourceTree = "<group>"; };
-		B022426F24F94479005209A4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		B022427024F9E467005209A4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		CEDF132C1A0E0C3BF00BDEAC /* Pods_SampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E94290F2CC4BD5A4419DFEA1 /* Pods_Sample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -96,7 +97,7 @@
 		798268F11F1F269B0090613B = {
 			isa = PBXGroup;
 			children = (
-				B022426F24F94479005209A4 /* README.md */,
+				B022427024F9E467005209A4 /* README.md */,
 				798268FC1F1F269B0090613B /* Sample */,
 				798269111F1F269B0090613B /* SampleTests */,
 				798268FB1F1F269B0090613B /* Products */,
@@ -273,6 +274,7 @@
 			files = (
 				798269081F1F269B0090613B /* LaunchScreen.storyboard in Resources */,
 				798269051F1F269B0090613B /* Assets.xcassets in Resources */,
+				B022427124F9E467005209A4 /* README.md in Resources */,
 				798269031F1F269B0090613B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
