@@ -2,6 +2,7 @@ target 'Sample' do
   use_frameworks!
 
   pod 'Harald', :path => '../'
+  pod 'TILogger'
 
   target 'SampleTests' do
     inherit! :search_paths

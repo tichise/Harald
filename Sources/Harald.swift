@@ -18,7 +18,7 @@ open class Harald: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     public static let shared: Harald = Harald()
     
-    internal let isDebug:Bool = true
+    public var isDebug: Bool = false
     
     internal var bleModuleType: BLEModuleType?
     
@@ -148,7 +148,7 @@ open class Harald: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         }
     }
     
-    // ペリフェラルとの既存の接続が切断されたときに呼び出されます。
+    /// ペリフェラルとの既存の接続が切断されたときに呼び出されます。
     public func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         
         if isDebug {
@@ -168,7 +168,7 @@ open class Harald: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     // MARK: - CBPeripheralDelegate
     
-    // サービス発見したら呼ばれる
+    /// サービス発見したら呼ばれる
     public func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         
         if isDebug {

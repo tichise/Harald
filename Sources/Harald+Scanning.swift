@@ -10,7 +10,7 @@ import Foundation
 import CoreBluetooth
 
 extension Harald {
-    public func startScanning(_ timeout: Double) {
+    public func startScanning(timeout: Double) {
         startScanning(nil, timeout: timeout)
     }
     

@@ -14,14 +14,12 @@ extension Harald {
     /**
      * 機器に接続する
      */
-    public func connect(peripheral: CBPeripheral, connectCompletionHandler: (() -> Void)?) {
+    public func connect(peripheral: CBPeripheral) {
         if self.centralManager.state != .poweredOn {
             if isDebug {haraldDelegate?.receiveLog(message: "Couldn´t connect to peripheral")}
             return
         }
-        
-        self.connectCompletionHandler = connectCompletionHandler
-        
+                
         self.centralManager.connect(peripheral, options: [CBConnectPeripheralOptionNotifyOnDisconnectionKey : NSNumber(value: true)])
     }
     
