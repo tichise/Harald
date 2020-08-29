@@ -5,7 +5,6 @@ Harald is a BLE library.
 ### License
 Harald is available under the MIT license. See the LICENSE file for more info.
 
-
 ### BLEの基本
 - セントラルマネージャーを起動する。
 - スキャンして、ペリフェラル（BLEデバイス）を検出する。
