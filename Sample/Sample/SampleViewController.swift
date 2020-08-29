@@ -18,7 +18,7 @@ class SampleViewController: UIViewController, HaraldDelegate {
         super.viewDidLoad()
         
         Harald.shared.haraldDelegate = self
-        Harald.shared.set(isDebug: true)
+        Harald.shared.isDebug = true
         
         // Initialize CBCentralManager
         if 1 == 1 {
@@ -32,7 +32,7 @@ class SampleViewController: UIViewController, HaraldDelegate {
             let txUUID = CBUUID(string: HaraldConstants.UART_TX_UUID)
             let rxNotificationUUID = CBUUID(string: HaraldConstants.UART_RX_NOTIFICATION_UUID)
             
-            Harald.shared.set(isDebug: true)
+            Harald.shared.isDebug = true
             Harald.shared.prepareForKonashi(peripheralPrefix: peripheralPrefix, serviceUUID: serviceUUID, txUUID: txUUID, rxNotificationUUID: rxNotificationUUID, configUUID: configUUID, baundrateUUID: baudrateUUID)
         } else {
             // M5Stackの場合
@@ -43,7 +43,7 @@ class SampleViewController: UIViewController, HaraldDelegate {
             let txUUID = CBUUID(string: HaraldConstants.UART_TX_UUID)
             let rxNotificationUUID = CBUUID(string: HaraldConstants.UART_RX_NOTIFICATION_UUID)
             
-            Harald.shared.set(isDebug: true)
+            Harald.shared.isDebug = true
             Harald.shared.prepareForEsp32(peripheralPrefix: peripheralPrefix, serviceUUID: serviceUUID, txUUID: txUUID, rxNotificationUUID: rxNotificationUUID)
         }
     }

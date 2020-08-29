@@ -18,7 +18,7 @@ open class Harald: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     public static let shared: Harald = Harald()
     
-    internal var isDebug: Bool = true
+    public var isDebug: Bool = false
     
     internal var bleModuleType: BLEModuleType?
     
