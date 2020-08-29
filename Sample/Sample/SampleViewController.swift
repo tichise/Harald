@@ -100,10 +100,6 @@ class SampleViewController: UIViewController, HaraldDelegate {
         }
     }
     
-    /// データを受信した時に呼ばれる
-    func bleDidReceiveData(_ peripheral: CBPeripheral, data: Data?) {
-    }
-    
     // キャラクタリスティック TXを発見した時に呼ばれる
     func bleDiscoverTxCharacteristic(txCharacteristic: CBCharacteristic?, peripheral: CBPeripheral) {
         TILogger().info("キャラクタリスティック TXを発見した時に呼ばれる")
@@ -122,6 +118,10 @@ class SampleViewController: UIViewController, HaraldDelegate {
     // キャラクタリスティック Configを発見した時に呼ばれる
     func bleDiscoverConfigCharacteristic(configCharacteristic: CBCharacteristic?, peripheral: CBPeripheral) {
         TILogger().info("キャラクタリスティック Configを発見した時に呼ばれる")
+    }
+    
+    /// データを受信した時に呼ばれる
+    func bleDidReceiveData(_ peripheral: CBPeripheral, data: Data?) {
     }
     
     func receiveLog(message: String) {
