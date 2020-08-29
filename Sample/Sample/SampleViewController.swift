@@ -80,8 +80,7 @@ class SampleViewController: UIViewController, HaraldDelegate {
         TILogger().info("ペリフェラルを見つけた時に呼ばれます")
 
         // 発見したペリフェラルに接続
-        Harald.shared.connect(peripheral: peripheral) {
-        }
+        Harald.shared.connect(peripheral: peripheral)
     }
     
     /// ペリフェラルに接続したら呼ばれる
