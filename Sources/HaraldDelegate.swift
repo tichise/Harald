@@ -10,6 +10,7 @@ import Foundation
 import CoreBluetooth
 
 public protocol HaraldDelegate {
+    @available(iOS 10.0, *)
     func bleDidUpdateState(_ state: CBManagerState)
     func bleDiscoverPeripheral(_ peripheral: CBPeripheral)
     func bleDidConnectToPeripheral(_ peripheral: CBPeripheral)
